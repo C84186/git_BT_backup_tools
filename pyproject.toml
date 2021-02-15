@@ -8,6 +8,7 @@ authors = ["Smitten <77771103+C84186@users.noreply.github.com>"]
 python = "^3.8"
 "bencode.py" = "^4.0.0"
 PyYAML = "^5.4.1"
+click = "^7.1.2"
 
 [tool.poetry.dev-dependencies]
 
@@ -15,5 +16,5 @@ PyYAML = "^5.4.1"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[scripts]
-bencode2yaml = 'git_bt_backup_tools.pretty_print:pretty_print_bencoded'
+[tool.poetry.scripts]
+cat_bencode = 'git_bt_backup_tools.pretty_print:pretty_print_bencoded'

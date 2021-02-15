@@ -23,7 +23,7 @@ def truncate_end(data):
         data = binascii.unhexlify(data)
     except binascii.Error:
         data = data.encode()
-    return hex(zlib.adler32(data))
+    return hex(zlib.adler32(data) & 0xffffffff)
 
 
 def truncate(data: dict):

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "git_bt_backup_tools"
+name = "git-bt-backup-tools"
 version = "0.1.0"
 description = ""
 authors = ["Smitten <77771103+C84186@users.noreply.github.com>"]
@@ -14,3 +14,6 @@ PyYAML = "^5.4.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[scripts]
+bencode2yaml = 'git_bt_backup_tools.pretty_print:pretty_print_bencoded'

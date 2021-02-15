@@ -1,2 +1,0 @@
-bencode.py==4.0.0
-PyYAML==5.4.1

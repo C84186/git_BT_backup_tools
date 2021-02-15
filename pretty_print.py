@@ -19,7 +19,10 @@ def convert(data):
     return data
 
 def truncate_end(data):
-    data = binascii.unhexlify(data)
+    try:
+        data = binascii.unhexlify(data)
+    except binascii.Error:
+        data = data.encode()
     return hex(zlib.adler32(data))
 
 

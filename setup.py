@@ -10,6 +10,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        bencode2yaml=pretty_print:pretty_print 
+        bencode2yaml=pretty_print:pretty_print_bencoded 
     ''',
 )

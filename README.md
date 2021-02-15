@@ -136,3 +136,6 @@ index 1155eef..58691e9 100644
  stop_when_ready: 0
 ```
 
+Wow! it's now super obvious what's changed - The torrent has been active a bit more, some peers appear to
+have been banned, for some reason the name field has disappeared (whatever, it looks fine it qbittorrent i guess?).
+Also, the peers have changed.

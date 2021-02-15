@@ -2,6 +2,10 @@
 
 https://pypi.org/project/git-bt-backup-tools/
 
+```bash
+pip install git-bt-backup-tools
+```
+
 ## Motivation
 
 Versioning your bittorrent state folder can have a lot of benefits - If something goes wrong, for some clients (ahem, qbittorrent), 

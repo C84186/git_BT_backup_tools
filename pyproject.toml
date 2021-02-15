@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "git-bt-backup-tools"
-version = "0.2.0"
+version = "0.2.0.9001"
 description = ""
 authors = ["Smitten <77771103+C84186@users.noreply.github.com>"]
 

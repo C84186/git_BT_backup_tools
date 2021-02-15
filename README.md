@@ -25,6 +25,45 @@ In particular, (as of right now, at least) it provides a tool that parses the ug
 
 ## Background
 
+Let's examine exactly what a `bencode` looks like:
+
+```bash
+cat ubuntu-20.04.2.0-desktop-amd64.iso.torrent
+```
+This is a fairly long file - here's the "good" part:
+
+```
+d8:announce35:https://torrent.ubuntu.com/announce13:announce-listll35:https://torrent.ubuntu.com/announceel40:https://ipv6.torrent.ubuntu.com/announceee7:comment29:Ubuntu CD releases.ubuntu.com10:created by13:mktorrent 1.113:creation datei1613070152e4:infod6:lengthi2877227008e4:name34:ubuntu-20.04.2.0-desktop-amd64.iso12:piece lengthi262144e6:pieces219520:
+```
+
+After this, we get something like the following:
+
+```
+pieces219520:؛0S(m2&Xcmc(u(轩)ΰcTGٵ$/}@S\Q_Yx@p9jFtoy
+Q#~hL)VuA5īMcDGDK咮}aJ>!:솦ռwJBM5LQE    O{;ۯD:ih"                                 "
+W;~s>^
+u%
+  2n(QEr{!KD$%qnnf|BuÈ-\r
+```
+
+Yes, that looks like garbage.
+
+For a while. `bencode`s are fairly efficient, and (presumably) easy to parse encodings -
+There's a few datatypes that are represented with a character at the start of the key, and the length of a given field is specified at the start of that field.
+
+Fields like `pieces` tend to have variable length, and comprise most of a typical torrent file, as they contain information about the actual file/s to be downloaded.
+
+These fields are also binary gobbedygook.
+
+The changes in `bencode`d files actually follow a very sane, predictable pattern, however.
+
+If we look at the "good" part of the above ubuntu torrent, we notice that, though its not to best to read, its pretty understandable.
+
+If we tried to feed it to a git diff, however, it'd be hard to see what information has actually changed, as its all one line.
+
+This package provides a tool for viewing these files without the cruft - It truncates the ugly binary down to a terse checksum (Which still lets us see if there's been a change!), and 
+gives us nice, readable yaml for the rest.
+
 Before:
 
 ```bash

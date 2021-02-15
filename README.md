@@ -2,9 +2,26 @@
 
 https://pypi.org/project/git-bt-backup-tools/
 
-## Aim
+## Motivation
+
+Versioning your bittorrent state folder can have a lot of benefits - If something goes wrong, for some clients (ahem, qbittorrent), 
+corrupted fastresumes can really break your whole client, leaving you no easy way to get back to what you had. 
+
+By restoring to a known, working state, you're able to reverse a catastrophic failure.
+
+Almost every guide that directs you to do anything that touches your fastresumes (migrate across clients, across servers, etc) comes with
+a great big warning "BACKUP YOUR BT_backup FOLDER BEFORE DOING THIS".
+
+They're not wrong- I've f*cked things up with no way to unf*ck them besides starting fresh on a few occasions.
+
+There are a lot of way to back your state folder up, but personally, I really like `git` for understanding how things change between versions.
+
+Unfortunately, there are aspects of the `bencode` schema (the way that .torrent & .fastresume files are structured) that don't lend themselves to
+comfortable viewing of differences with default git tools.
 
 This package aims to provide convenience tools for making managing your bittorrent clients' state folder using `git` a bit easier.
+
+In particular, (as of right now, at least) it provides a tool that parses the ugly `bencoded` torrents & emits pretty, diffable `yaml` equivalents.
 
 ## Background
 

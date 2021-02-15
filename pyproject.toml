@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "git-bt-backup-tools"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Smitten <77771103+C84186@users.noreply.github.com>"]
 
@@ -18,3 +18,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 cat_bencode = 'git_bt_backup_tools.pretty_print:pretty_print_bencoded'
+git_bt_tools_setup = 'git_bt_backup_tools.configure_git:setup_config'

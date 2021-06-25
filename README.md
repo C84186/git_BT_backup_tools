@@ -172,8 +172,8 @@ Also, the peers have changed.
 > 
 > To recover all the files you can use something like this:
 > ```
-> FILE=$(find ~/.local/share/data/qBittorrent/BT_backup -name '*.fastresume' -size +1c -print -quit)
-> find ~/.local/share/data/qBittorrent/BT_backup -name '*.fastresume' -size 0 -exec cp "${FILE}" "{}" \;
+> VALID_FILE=$(find ~/.local/share/data/qBittorrent/BT_backup -name '*.fastresume' -size +1c -print -quit)
+> find ~/.local/share/data/qBittorrent/BT_backup -name '*.fastresume' -size 0 -exec cp "${VALID_FILE}" "{}" \;
 > ```
 
 _Originally posted by @jackivanov in https://github.com/qbittorrent/qBittorrent/issues/4850#issuecomment-557485884_

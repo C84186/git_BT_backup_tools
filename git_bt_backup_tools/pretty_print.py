@@ -44,7 +44,7 @@ def parse_bencoded(bencoded_path: pathlike_hint) -> typing.Optional[dict]:
         with open(bencoded_path, "rb") as f:
             decoded = bencodepy.bread(f)
     except bencodepy.exceptions.BencodeDecodeError:
-        L.warn(f"{fastresume_path} failed to decode!")
+        L.warn(f"{bencoded_path} failed to decode!")
         return None
 
     decoded = convert(decoded)

@@ -143,3 +143,37 @@ index 1155eef..58691e9 100644
 Wow! it's now super obvious what's changed - The torrent has been active a bit more, some peers appear to
 have been banned, for some reason the name field has disappeared (whatever, it looks fine it qbittorrent i guess?).
 Also, the peers have changed.
+
+
+## Recovering Corrupted Fastresumes
+
+
+> Faced the same issue, here is a workaround:
+>
+> In the BT_backup directory some files are empty, the size is 0
+>
+> ```
+> $ ls -la *.fastresume
+> -rw-r--r-- 1 pi pi  1417 Nov 22 10:37 0b42a9f27fcafd5492cfb3ca1b1c1ac305ca8453.fastresume
+> -rw-r--r-- 1 pi pi  2194 Nov 22 10:39 14e482bccff6f09a41c320717bbaacd5df18b527.fastresume
+> ...
+> -rw-r--r-- 1 pi pi     0 Nov 21 15:47 ea2ac2a342f52a38e808efaebc3d0efcced33827.fastresume
+> -rw-r--r-- 1 pi pi     0 Nov 21 15:50 ee0c9efe8aefb24d2c97dba6e64a6facd70d10f7.fastresume
+> -rw-r--r-- 1 pi pi  1111 Nov 22 10:40 f3ff92ec3e565a5286a28e4e0317aa32896dedd3.fastresume
+> ```
+>
+> Now, you have to close qBittorrent, replace the empty data files with a non-empty one
+> 
+> ```
+> $ cp f3ff92ec3e565a5286a28e4e0317aa32896dedd3.fastresume ee0c9efe8aefb24d2c97dba6e64a6facd70d10f7.fastresume
+> ```
+> 
+> Start qBittorrent again and you'll see this torrent's back. You would need to run a recheck on these recovered torrents. 
+> 
+> To recover all the files you can use something like this:
+> ```
+> FILE=$(find ~/.local/share/data/qBittorrent/BT_backup -name '*.fastresume' -size +1c -print -quit)
+> find ~/.local/share/data/qBittorrent/BT_backup -name '*.fastresume' -size 0 -exec cp "${FILE}" "{}" \;
+> ```
+
+_Originally posted by @jackivanov in https://github.com/qbittorrent/qBittorrent/issues/4850#issuecomment-557485884_

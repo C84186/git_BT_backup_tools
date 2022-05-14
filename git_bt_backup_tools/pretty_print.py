@@ -7,7 +7,7 @@ L = logging.getLogger(__name__)
 pathlike_hint = typing.Union[str, bytes, os.PathLike]
 truncate_fields = ['pieces']
 
-drop_fields = [
+drop_fields = {
         'active_time', 
         'seeding_time', 
         'finished_time', 
@@ -17,7 +17,7 @@ drop_fields = [
         'banned_peers6',
         'qBt-magnetUri',
         'qBt-tags'
-        ]
+        }
 def convert(data):
     if isinstance(data, bytes):
         if data.isascii(): return data.decode('ascii')
@@ -47,11 +47,9 @@ def truncate(data: dict):
     return data
 
 def remove_boring(data: dict):
-    for key in data:
-        if key in drop_fields:
-            del data[key]
-    return data
 
+    return {k: v for k, v in data.items() if not  k in drop_fields}
+    
 def parse_bencoded(bencoded_path: pathlike_hint) -> typing.Optional[dict]:
     bencoded_path = Path(bencoded_path)
 

@@ -16,7 +16,8 @@ drop_fields = {
         'banned_peers',
         'banned_peers6',
         'qBt-magnetUri',
-        'qBt-tags'
+        'qBt-tags',
+        'trackers'
         }
 def convert(data):
     if isinstance(data, bytes):

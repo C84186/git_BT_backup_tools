@@ -7,6 +7,17 @@ L = logging.getLogger(__name__)
 pathlike_hint = typing.Union[str, bytes, os.PathLike]
 truncate_fields = ['pieces']
 
+drop_fields = [
+        'active_time', 
+        'seeding_time', 
+        'finished_time', 
+        'peers', 
+        'peers6', 
+        'banned_peers',
+        'banned_peers6',
+        'qBt-magnetUri',
+        'qBt-tags'
+        ]
 def convert(data):
     if isinstance(data, bytes):
         if data.isascii(): return data.decode('ascii')
@@ -35,6 +46,11 @@ def truncate(data: dict):
             data[key] = truncate(data[key])
     return data
 
+def remove_boring(data: dict):
+    for key in data:
+        if key in drop_fields:
+            del data[key]
+    return data
 
 def parse_bencoded(bencoded_path: pathlike_hint) -> typing.Optional[dict]:
     bencoded_path = Path(bencoded_path)
@@ -50,7 +66,7 @@ def parse_bencoded(bencoded_path: pathlike_hint) -> typing.Optional[dict]:
     decoded = convert(decoded)
     return decoded
 
-def print_bencoded(bencoded: typing.Optional[dict], truncate_fields: bool):
+def print_bencoded(bencoded: typing.Optional[dict], truncate_fields: bool, drop_boring: bool):
     if not bencoded:
         print("---")
         print("---")
@@ -58,6 +74,10 @@ def print_bencoded(bencoded: typing.Optional[dict], truncate_fields: bool):
 
     if truncate_fields:
         bencoded = truncate(bencoded)
+
+    if drop_boring:
+        bencoded = remove_boring(bencoded)
+
     print("---")
     print(yaml.dump(bencoded))
     print("---")
@@ -65,8 +85,17 @@ def print_bencoded(bencoded: typing.Optional[dict], truncate_fields: bool):
 @click.command()
 @click.argument('bencoded_path', type = click.Path(exists = True, dir_okay = False))
 @click.option('--truncate_fields', default=True, type = click.BOOL)
-def pretty_print_bencoded(bencoded_path: pathlike_hint, truncate_fields):
+@click.option('--drop_boring', default=False, type = click.BOOL)
+def pretty_print_bencoded(bencoded_path: pathlike_hint, truncate_fields, drop_boring):
     bencoded = parse_bencoded(bencoded_path)
 
-    print_bencoded(bencoded, truncate_fields)
+    print_bencoded(bencoded, truncate_fields, drop_boring)
 
+@click.command()
+@click.argument('bencoded_path', type = click.Path(exists = True, dir_okay = False))
+@click.option('--truncate_fields', default=True, type = click.BOOL)
+@click.option('--drop_boring', default=True, type = click.BOOL)
+def pretty_print_bencoded_fun(bencoded_path: pathlike_hint, truncate_fields, drop_boring):
+    bencoded = parse_bencoded(bencoded_path)
+
+    print_bencoded(bencoded, truncate_fields, drop_boring)
